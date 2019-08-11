@@ -8,6 +8,11 @@ on p.CategoryID = c.CategoryID
 order by p.ProductID
 
 ### Display the OrderID and ShipperName for all orders placed before January 9, 1997. Shows 161 records.
+select o.OrderID, s.ShipperName, o.OrderDate
+from Orders as o
+join Shippers as s
+on o.ShipperID = s.ShipperID
+where o.OrderDate < "1997-01-09"
 
 ### Display all ProductNames and Quantities placed on order 10251. Sort by ProductName. Shows 3 records.
 
