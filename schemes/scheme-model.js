@@ -4,8 +4,14 @@ const find = _ => {
       return db('schemes');
 }
 
-const findById = (id) => {
-    return db('schemes').where({ id }).first();
+const findById = async(id) => {
+    try{
+        const selectedScheme = await db('schemes').where({ id }).first();
+        return (selectedScheme) ? selectedScheme : null;
+    }
+    catch {
+        return null;
+    }
 }
 
 module.exports = {
