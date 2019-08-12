@@ -50,9 +50,33 @@ const add = async (scheme) => {
         return err.message;
     }
 }
+
+const update = async (newData, id) => {
+    try {
+        // Attempt to select scheme at specified ID
+        const checkSchemeExists = await db('schemes').where({ id });
+        // If available, move on. If not, return null
+        !(checkSchemeExists) && null;
+        // Update scheme entry with newData
+        const updatedScheme = await db('schemes').where({ id }).update(newData);
+        // db.update returns the number of changes made. Check if entry updated
+        !(updatedScheme) && null;
+        // Select updated scheme entry to be returned
+        const selectUpdatedScheme = await db('schemes').where({ id });
+        // Check if scheme could be selected
+        !(selectUpdatedScheme) && null;
+        // Return updated scheme
+        return selectUpdatedScheme;
+    }
+    catch (err) {
+        return err.message;
+    }
+}
+
 module.exports = {
     find,
     findById,
     findSteps,
-    add
+    add,
+    update
   }
