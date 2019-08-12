@@ -73,10 +73,30 @@ const update = async (newData, id) => {
     }
 }
 
+const remove = async (id) => {
+    try{
+        // Select scheme at id
+        const selectScheme = await db('schemes').where({ id }).first();
+        // If not found return null;
+        !(selectScheme) && null;
+        // Delete scheme by id
+        const deletedScheme = await db('schemes').where({ id}).del();
+        // deletedScheme returns number of changes made. Check if delete was successful
+        !(deletedScheme) && null;
+        // Return deleted scheme
+        return selectScheme;
+
+    }
+    catch (err) {
+        return err.message;
+    }
+}
+
 module.exports = {
     find,
     findById,
     findSteps,
     add,
-    update
+    update,
+    remove
   }
